@@ -1,0 +1,114 @@
+/* SAM */
+.navbar .navbar-nav a.nav-link {
+  color: var(--gray);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.navbar-light .navbar-nav .show > .nav-link{
+  color: var(--gray-dark);
+}
+
+.navbar .navbar-nav a.nav-link:hover {
+  color: var(--gray-dark);
+}
+
+.card-bayar{
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.card-materi-admin{
+  position: relative;
+}
+
+.card-materi-admin .close-btn{
+  position: absolute;
+  right: -6px;
+  top: -7px;
+  z-index: 10;
+  cursor: pointer;
+  color: var(--danger);
+  font-size: 20px;
+  transition: all 0.2s ease-in;
+}
+
+#login-navbar a:hover{
+  background-color: var(--warning);
+  color: white !important;
+}
+
+.card-materi-admin .close-btn:hover{
+  transform: scale(1.2);
+}
+
+#sidebarMenu .nav-item .nav-link{
+  color: var(--gray);
+}
+
+#sidebarMenu .nav-item .nav-link svg{
+  color: var(--gray);
+}
+
+#sidebarMenu .nav-item .nav-link:hover{
+  color: var(--gray-dark);
+}
+
+#sidebarMenu .nav-item .nav-link:hover svg{
+  color: var(--gray-dark);
+}
+
+#sidebarMenu .nav-item .nav-link.active{
+  color: var(--light);
+}
+
+#sidebarMenu .nav-item .nav-link.active svg{
+  color: var(--light);
+}
+
+.bg-welcome{
+  background-image: url(https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80);
+  background-size: cover;
+  min-height: 100vh;
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.bg-overlay{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgb(56, 53, 53);
+  opacity: 0.5;
+}
+
+.welcome-text{
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  position: relative;
+}
+
+.welcome-title{
+  color: white;
+  font-size: 50px;
+  font-weight: 800;
+}
+
+.welcome-caption{
+  color: white;
+  font-weight: 500;
+  font-size: 23px;
+  margin-top: 10px;
+}
+
+.line-welcome{
+  height: 2px;
+  width: 30%;
+  margin: 0 10px;
+  background-color: var(--white);
+}

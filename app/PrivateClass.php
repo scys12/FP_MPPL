@@ -4,6 +4,7 @@ namespace App;
 
 // use Illuminate\Database\Eloquent\Model;
 use Jenssegers\Mongodb\Eloquent\Model;
+use App\User;
 
 class PrivateClass extends Model
 {
@@ -13,6 +14,6 @@ class PrivateClass extends Model
 
     public function user()
     {
-        return $this->hasOne('App\User');
+        return $this->belongsTo(User::class, 'user_ids');
     }
 }

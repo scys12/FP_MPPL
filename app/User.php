@@ -60,7 +60,7 @@ class User extends Eloquent implements Authenticatable
 
     public function class()
     {
-        return $this->belongsToMany(PrivateClass::class);
+        return $this->hasMany(PrivateClass::class);
     }
 
     public function soal_materis()

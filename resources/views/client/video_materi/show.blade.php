@@ -8,11 +8,11 @@
     </div>
     <div class="col-md-12">      
       <div class="row">
-        <div class="col-md-12 d-flex justify-content-center">
-          <video width="400" controls>
-            <iframe width="727" height="409" src="https://www.youtube.com/embed/URUJD5NEXC8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div class="col-md-12 mb-3 d-flex justify-content-center">
+          <video controls width="50%" height="480">
+            <source src="{{asset('/storage/'.$video_materi->link)}}" type="video/mp4">
           </video>
-        </div>        
+        </div>
       </div>
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
@@ -26,7 +26,9 @@
         <div class="tab-pane fade show active" id="deskripsi" role="tabpanel" aria-labelledby="deskripsi">
           <div class="mt-3">
             <h4>Deskripsi</h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi quis incidunt corrupti aperiam? Velit ipsam alias sunt at repudiandae necessitatibus fuga, maiores aut reiciendis ab officia, quo rem deserunt odio facilis ducimus magni quibusdam assumenda labore veniam nulla? Delectus eum, itaque veritatis deleniti eveniet aspernatur ut qui at in? Dignissimos velit soluta assumenda nam aliquam error, veritatis debitis, repellat eum dicta minima itaque, corporis placeat porro neque molestiae quis quaerat rerum cupiditate nemo est incidunt deserunt nobis enim. Aut iste dolorum rerum sint omnis iure non repellendus aspernatur magni laboriosam eos totam tenetur ratione in illo ipsam quis, deleniti quidem.</p>
+            <p>
+              {!! $video_materi->description !!}
+            </p>
           </div>
         </div>
         <div class="tab-pane fade" id="diskusi" role="tabpanel" aria-labelledby="diskusi">

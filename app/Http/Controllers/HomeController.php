@@ -71,28 +71,10 @@ class HomeController extends Controller
         return view('profile.show');
     }
 
-    public function showBelajarMandiriPage()
-    {
-        return view('belajar_mandiri');
-    }
-
-    public function showVideoMateri(){
-        return view('video_materi');
-    }
-
-    public function showSoalMateri(){
-        return view('soal_materi');
-    }
-
     public function showPrivatePage()
     {
         return view('private');
-    }
-
-    public function showDetailPrivatePage()
-    {
-        return view('detail_private');
-    }
+    }    
 
     public function showFreemalanggaPage()
     {

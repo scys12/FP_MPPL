@@ -26,7 +26,7 @@ class VideoMateriRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:20'],
             'description' => ['required', 'string'],
-            'link-file' => 'sometimes|file|max:100000',
+            'link-file' => 'sometimes|file', 
         ];
     }
 }

@@ -112,3 +112,8 @@
   margin: 0 10px;
   background-color: var(--white);
 }
+
+.m_height{
+  min-height: 290px;
+  height: 350px;
+}

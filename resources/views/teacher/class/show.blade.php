@@ -46,6 +46,24 @@
         <p>Teknik Elektro UNJ</p>
         <h6 class="font-weight-bold">Deskripsi</h6>
         {!! $class->description !!}
+        @isset($class->zoom)
+          <div class="mb-3">
+            <h6 class="font-weight-bold">
+              Link Zoom
+            </h6>
+            <a href="{{url('http://'.$class->zoom)}}">Link Zoom</a>
+          </div>
+        @endisset
+        <form action="{{route('teacher.class.zoom', ['id' => $class->id ])}}" method="post">
+          @csrf
+          <div class="form-group">
+            <h6 class="font-weight-bold">
+              Link Zoom
+            </h6>
+            <input type="text" class="form-control @error('zoom') is-invalid @enderror" id="zoom" required name="zoom" value="{{ old('zoom') }}" required>
+          </div>
+          <button class="btn btn-primary" type="submit">Upload Link Zoom</button>
+        </form>
       </div>
     </div>
   </div>

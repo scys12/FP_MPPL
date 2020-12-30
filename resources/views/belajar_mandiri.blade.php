@@ -8,7 +8,7 @@
     </div>
     <div class="col-md-12">
       <div class="d-flex ">
-        <a href="#" class="btn btn-warning">Lihat Semua Video Materi</a>
+        <a href="{{route('video_materi.index')}}" class="btn btn-warning">Lihat Semua Video Materi</a>
       </div>
       <div class="row">
         @foreach ($video_materi as $materi)
@@ -21,8 +21,17 @@
               <h5 class="card-title">{{$materi->name}}</h5>
               <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
-                  <a href="" class="btn btn-outline-danger btn-sm">Beli</a>                  
-                  <a href="{{route('video_materi.show', ['id' => $materi->id])}}" class="btn btn-outline-danger btn-sm">Detail</a>
+                  @if (!$one)
+                    <a href="{{route('packet.buy')}}" class="btn btn-outline-danger btn-sm">Beli</a>                  
+                  @endif
+                  @if (count(\App\UserVideoMateri::where('user_ids', Auth::user()->id)->where('video_materi_ids' , $materi->id)->get()) > 0)
+                    <a href="{{route('video_materi.show', ['id' => $materi->id])}}" class="btn btn-outline-secondary btn-sm">Detail</a>                      
+                  @else 
+                      <form action="{{route('video_materi.attend', ['id' => $materi->id])}}" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Ambil Kelas</button>
+                      </form>
+                    @endif
                 </div>
               </div>
             </div>
@@ -32,7 +41,7 @@
       </div>
       <div class="col-md-12 mt-5">
         <div class="d-flex ">
-          <a href="#" class="btn btn-warning">Lihat Semua Soal Materi</a>
+          <a href="{{route('soal_materi.index')}}" class="btn btn-warning">Lihat Semua Soal Materi</a>
         </div>
         <div class="row">
           @foreach ($soal_materi as $materi)
@@ -45,14 +54,23 @@
                   <h5 class="card-title">{{$materi->name}}</h5>
                   <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="btn-group mr-2">
-                      <a href="" class="btn btn-outline-danger btn-sm">Beli</a>                      
-                      <a href="{{route('soal_materi.show', ['id' => $materi->id])}}" class="btn btn-outline-danger btn-sm">Detail</a>
+                      @if (!$one)
+                        <a href="{{route('packet.buy')}}" class="btn btn-outline-danger btn-sm">Beli</a>                  
+                      @endif
+                      @if (count(\App\UserSoalMateri::where('user_ids', Auth::user()->id)->where('soal_materi_ids' , $materi->id)->get()) > 0)
+                        <a href="{{route('soal_materi.show', ['id' => $materi->id])}}" class="btn btn-outline-secondary btn-sm">Detail</a>                      
+                      @else 
+                          <form action="{{route('soal_materi.attend', ['id' => $materi->id])}}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Ambil Kelas</button>
+                          </form>
+                        @endif
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-        @endforeach
+          @endforeach
         </div>
     </div>
   </div>

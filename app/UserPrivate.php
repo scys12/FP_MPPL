@@ -5,18 +5,18 @@ namespace App;
 // use Illuminate\Database\Eloquent\Model;
 use Jenssegers\Mongodb\Eloquent\Model;
 
-class UserSoalMateri extends Model
+class UserPrivate extends Model
 {
     protected $fillable = [
-        'user_ids' , 'soal_materi_ids',
+        'user_ids' , 'private_class_ids',
     ];
 
     public function user()
     {
         return $this->hasOne('App\User');
     }
-    public function soal_materi()
+    public function private_class()
     {
-        return $this->belongsTo('App\SoalMateri', 'soal_materi_ids');
+        return $this->belongsTo('App\PrivateClass', 'private_class_ids');
     }
 }

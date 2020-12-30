@@ -15,4 +15,9 @@ class VideoMateri extends Model
     {
         return $this->hasOne('App\User');
     }
+
+    public function user_video_materis()
+    {
+        return $this->hasMany('App\UserVideoMateri');
+    }
 }

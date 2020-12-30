@@ -3,6 +3,13 @@
 @section('content')
 <div class="container mb-3 mt-3">
   <div class="row justify-content-center">
+    <div class="col-md-12">
+      @if (session('status'))
+          <div class="alert alert-success">
+              {{ session('status') }}
+          </div>
+      @endif
+    </div>
     <div>
       <h3>Materi Biologi</h3>
     </div>
@@ -35,26 +42,31 @@
           <div class="mt-5 mb-3">
             <h4>Tanya Pengajar Mengenai Materi Ini</h4>
           </div>
-          <div class="col-md-12 mt-3">
-            <div class="row">
-              <div class="card" style="width: 100%">
-                <div class="card-body" style="display: flex;flex-direction:column;">
-                  <a class="mb-1 font-weight-bold" href="">Kenapa Klorofil seperti itu ?</a>
-                  <small>Ditanyakan pada 10 November 2020</small>
+          @foreach ($questions as $question)
+            <div class="col-md-12 mt-3">
+              <div class="row">
+                <div class="card" style="width: 100%">
+                  <div class="card-body" style="display: flex;flex-direction:column;">
+                    <a class="mb-1 font-weight-bold" href="{{route('video_materi.question.show', ['id' => $video_materi->id, 'question_id' => $question->id])}}">{{$question->question}}</a>
+                    <small>Ditanyakan pada {{$question->created_at}}</small>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-12 mt-3">
-            <div class="row">
-              <div class="card" style="width: 100%">
-                <div class="card-body" style="display: flex;flex-direction:column;">
-                  <a class="mb-1 font-weight-bold" href="">Kenapa Klorofil seperti itu ?</a>
-                  <small>Ditanyakan pada 10 November 2020</small>
-                </div>
-              </div>
+          @endforeach
+          <form action="{{route('video_materi.question.insert', ['id' => $video_materi->id])}}" method="post">
+            @csrf
+            <div class="form-group mt-3">
+              <label for="" class="font-weight-bold">Tanya Pengajar</label>
+              <textarea name="question" id="question" class="form-control" cols="30" rows="10">
+              </textarea>
+              <input type="hidden" name="type" value="1">
+              @error('question')
+                  <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
             </div>
-          </div>
+            <button class="btn btn-primary btn-sm">Insert Question</button>
+          </form>
         </div>
       </div>
     </div>

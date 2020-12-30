@@ -18,4 +18,9 @@ class SoalMateri extends Model
     {
         return $this->hasOne('App\User');
     }
+
+    public function user_soal_materis()
+    {
+        return $this->hasMany('App\UserSoalMateri');
+    }
 }

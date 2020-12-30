@@ -15,7 +15,7 @@
           <div class="card-body">
             <h5 class="card-title">{{$class->user->name}} </h5>
             <h6 class="card-subtitle mb-2 text-muted">Rp200.000</h6>
-            <p class="card-text">Pengajar SMA</p>
+            <p class="card-text">{{$class->name}}</p>
             <hr>
             <a href="{{route('private.show', ['id' => $class->id ])}}" class="btn btn-primary">Lihat Detail</a>
           </div>

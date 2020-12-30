@@ -4,12 +4,11 @@ namespace App;
 
 // use Illuminate\Database\Eloquent\Model;
 use Jenssegers\Mongodb\Eloquent\Model;
-use App\User;
 
-class PrivateClass extends Model
+class Question extends Model
 {
     protected $fillable = [
-        'hari_kedua', 'hari_pertama', 'name', 'description', 'user_ids'
+        'user_ids', 'type', 'question', 'product_ids'
     ];
 
     public function user()
@@ -17,8 +16,8 @@ class PrivateClass extends Model
         return $this->belongsTo('App\User', 'user_ids');
     }
 
-    public function user_private()
+    public function comments()
     {
-        return $this->hasMany('App\UserPrivate');
+        return $this->belongsToMany('App\Comment', 'product_ids');
     }
 }

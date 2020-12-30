@@ -47,12 +47,20 @@
         <p>Teknik Elektro UNJ</p>
         <h6 class="font-weight-bold">Deskripsi</h6>
         {!! $private->description !!}
+        @if ($buy && isset($private->zoom))
+          <h5 class="font-weight-bold">
+            Link Zoom Pembelajaran
+          </h5>
+          <a href="{{url('http://'.$private->zoom)}}" class="btn btn-danger btn-sm">Link Zoom</a>
+        @endif
       </div>
-      <div class="d-flex justify-content-center m-3">
-        <button class="btn btn-primary">
-          Bayar Sekarang
-        </button>
-      </div>
+      @if (!$buy)
+        <div class="d-flex justify-content-center m-3">
+          <a href="{{route('packet.buy.private', ['id' => $private->id])}}" class="btn btn-primary">
+            Bayar Sekarang
+          </a>
+        </div>
+      @endif
     </div>
   </div>
 </div>

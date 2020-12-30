@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Payment;
+use App\UserVideoMateri;
+use App\UserSoalMateri;
+use App\UserPrivate;
 
 class HomeController extends Controller
 {
@@ -18,13 +22,46 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
+    {        
         return view('home');
     }
 
-    public function showDashboard()
+    public function showDashboard(Request $request)
     {
-        return view('dashboard');
+        $user_id = $request->user()->id;
+        $buy_one = Payment::where('user_ids', '=', $user_id)
+                            ->where('type', "1")
+                            ->where('date_started', '<=', new \DateTime())
+                            ->where('date_end', '>=', new \DateTime())
+                            ->get();
+        $buy_two = Payment::where('user_ids', '=', $user_id)
+                            ->where('type', "2")
+                            ->where('date_started', '<=', new \DateTime())
+                            ->where('date_end', '>=', new \DateTime())
+                            ->get();
+        $one;
+        $two;
+        if(count($buy_one)){
+            $one = $buy_one[0];
+        }else {
+            $one = null;
+        }
+        if(count($buy_two)){
+            $two = $buy_two[0];
+        }else {
+            $two = null;
+        }
+
+        $videoMateri = UserVideoMateri::where('user_ids', $user_id)->get();
+        $soalMateri = UserSoalMateri::where('user_ids', $user_id)->get();
+        $privateClass = UserPrivate::where('user_ids', $user_id)->get();
+        return view('dashboard', [
+            'one' => $one,
+            'two' => $two,
+            'userVideoMateri' => $videoMateri,
+            'userSoalMateri' => $soalMateri,
+            'privateClass' => $privateClass
+        ]);
     }
 
     public function showVideoMateriComment(){
@@ -32,14 +69,7 @@ class HomeController extends Controller
     }
     public function showMateriComment(){
         return view('comment');
-    }
-
-    public function showAllVideoMateri(){
-        return view('all_video_materi');
-    }
-    public function showAllMateri(){
-        return view('all_materi');
-    }
+    }    
 
     public function showOurProducts()
     {
@@ -84,12 +114,7 @@ class HomeController extends Controller
     public function showFreemalanggaDetailPage()
     {
         return view('detail_freemalangga');
-    }
-
-    public function showBuyPacketPage()
-    {
-        return view('buy_packet');
-    }
+    }    
 
     public function showPaymentPage()
     {

@@ -21,6 +21,15 @@ class ClassController extends Controller
       'class' => $class,
     ]);
   }
+
+  public function addZoom(Request $request, $id)
+  {
+    $class = PrivateClass::findOrFail($id);
+    $class->zoom = $request->zoom;
+    $class->save();
+    return redirect()->route('teacher.class.show', ['id' => $id]);
+  }
+
   public function showClassInsertPage(){
     return view('teacher.class.insert');
   }

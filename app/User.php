@@ -11,6 +11,11 @@ use Illuminate\Notifications\Notifiable;
 use App\PrivateClass;
 use App\SoalMateri;
 use App\VideoMateri;
+use App\Transaction;
+use App\Payment;
+use App\UserPrivate;
+use App\UserSoalMateri;
+use App\UserVideoMateri;
 
 class User extends Eloquent implements Authenticatable
 {
@@ -60,7 +65,17 @@ class User extends Eloquent implements Authenticatable
 
     public function class()
     {
-        return $this->hasMany(PrivateClass::class);
+        return $this->belongsToMany(PrivateClass::class);
+    }
+
+    public function question()
+    {
+        return $this->belongsToMany('App\Question');
+    }
+
+    public function comments()
+    {
+        return $this->belongsToMany('App\Comment');
     }
 
     public function soal_materis()
@@ -71,5 +86,30 @@ class User extends Eloquent implements Authenticatable
     public function video_materis()
     {
         return $this->belongsToMany(VideoMateri::class);
+    }
+
+    public function transactions()
+    {
+        return $this->belongsToMany(Transaction::class);
+    }
+
+    public function payments()
+    {
+        return $this->belongsToMany(Payment::class);
+    }
+
+    public function user_soal_materis()
+    {
+        return $this->belongsToMany(UserSoalMateri::class);
+    }
+
+    public function user_video_materis()
+    {
+        return $this->belongsToMany(UserVideoMateri::class);
+    }
+
+    public function user_private_class()
+    {
+        return $this->belongsToMany(UserPrivate::class);
     }
 }

@@ -10,19 +10,19 @@
             </div>
         @endif
         <div>
-          <h3 class="font-weight-bold">Beli Paket Pembelajaran</h3>
+          <h3 class="font-weight-bold">Beli Paket Kelas Private</h3>
         </div>
         <div class="col-md-6 ml-auto mr-auto mt-5">
-          @if ($one)
-              <p>Kamu sudah membeli paket Belajar Mandiri</p>
+          @if ($two)
+              <p>Kamu sudah membeli paket belajar Kelas Private ini</p>
           @else
-            <form action="{{route('packet.buy')}}" method="POST">
+            <form action="{{route('packet.buy.private', ['id' => $private->id])}}" method="POST">
               @csrf
               <div class="form-group">
                 <label for="paket">Pilih Paket</label>
                   <select class="form-control" id="paket" name="paket">
-                    @if (!$one)
-                      <option value="1">Belajar Mandirit</option>
+                    @if (!$two)
+                      <option value="2">Primalangga Private</option>
                     @endif
                   </select>
               </div>
@@ -31,20 +31,19 @@
                 <input type="email" class="form-control" id="promo">
               </div>
               <div class="form-group">
+                <label for="promo">Nama Pengajar</label>
+                <p class="font-weight-bold">{{$private->user->name}}</p>
+              </div>
+              <div class="form-group">
+                <label for="promo">Kelas Private</label>
+                <p class="font-weight-bold">{{$private->name}}</p>
+              </div>
+              <div class="form-group">
                 <label for="price">Harga</label>
                 <h3 style="color:var(--danger);font-weight:600">Rp. 200.000</h3>
                 <input type="hidden" name="price" value="200000">
               </div>
-              <div class="card bg-dark m-3" id="paket-belajar">
-                <div class="card-body">
-                  <ul>
-                    <li style="color:white">Aktif selama sebulan setelah pembelian paket</li>
-                    <li style="color:white">Akses seluruh video pembelajaran materi yang tersedia.</li>
-                    <li style="color:white">Akses seluruh latihan soal yang tersedia.</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="card bg-dark m-3" id="paket-private" style="display: none">
+              <div class="card bg-dark m-3" id="paket-private">
                 <div class="card-body">
                   <ul>
                     <li style="color:white">Pembelajaran selama 2 kali seminggu selama sebulan penuh</li>
@@ -63,20 +62,5 @@
         </div>
       </div>
     </div>
-  </div>
-  <script>
-    const paket = document.getElementById('paket');
-    paket.addEventListener('change', (e) => {
-      const paketBelajar = document.getElementById('paket-belajar');
-      const paketPrivate = document.getElementById('paket-private');
-      if (paket.value == 1) {
-        paketBelajar.style.display = 'block';
-        paketPrivate.style.display = 'none';
-      }
-      if (paket.value == 2) {
-        paketPrivate.style.display = 'block';
-        paketBelajar.style.display = 'none';
-      }
-    })
-  </script>
+  </div>  
 @endsection

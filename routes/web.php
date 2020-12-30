@@ -29,14 +29,32 @@ Route::group(['prefix' => 'products'], function () {
         Route::group(['prefix' => 'belajar_mandiri'], function () {
             Route::get('/', 'ProductController@showBelajarMandiriPage')->name('belajar_mandiri');
             Route::group(['prefix' => 'video_materi'], function () {
-                Route::get('/', 'HomeController@showAllVideoMateri')->name('video_materi.index');
+                Route::get('/', 'ProductController@showAllVideoMateri')->name('video_materi.index');
                 Route::get('/{id}', 'ProductController@showVideoMateri')->name('video_materi.show');
-                Route::get('/detail/comment', 'HomeController@showMateriComment')->name('video_materi.comment');
+                Route::post('/{id}/attend', 'UserVideoMateriController@registerSoal')->name('video_materi.attend');                
+
+                Route::group(['prefix' => '{id}/question'], function () {
+                    Route::post('/insert', 'QuestionController@addQuestion')->name('video_materi.question.insert');                    
+                    Route::get('/{question_id}', 'QuestionController@showQuestion')->name('video_materi.question.show');
+
+                    Route::group(['prefix' => '{question_id}/comment'], function () {
+                        Route::post('/insert', 'CommentController@addComment')->name('video_materi.comment.insert');
+                    });
+                });
             });
             Route::group(['prefix' => 'soal_materi'], function () {
-                Route::get('/', 'HomeController@showAllMateri')->name('soal_materi.index');
+                Route::get('/', 'ProductController@showAllMateri')->name('soal_materi.index');
                 Route::get('/{id}', 'ProductController@showsoalMateri')->name('soal_materi.show');
-                Route::get('/detail/comment', 'HomeController@showVideoMateriComment')->name('soal_materi.comment');
+                Route::post('/{id}/attend', 'UserSoalMateriController@registerSoal')->name('soal_materi.attend');
+
+                Route::group(['prefix' => '{id}/question'], function () {
+                    Route::post('/insert', 'QuestionController@addQuestionSoalMateri')->name('soal_materi.question.insert');                    
+                    Route::get('/{question_id}', 'QuestionController@showQuestionSoalMateri')->name('soal_materi.question.show');
+
+                    Route::group(['prefix' => '{question_id}/comment'], function () {
+                        Route::post('/insert', 'CommentController@addCommentSoalMateri')->name('soal_materi.comment.insert');
+                    });
+                });
             });
         });
         Route::group(['prefix' => 'private'], function () {
@@ -60,16 +78,25 @@ Route::group(['middleware' => ['auth', 'user']], function () {
         Route::get('/', 'HomeController@showProfilePage')->name('profile.show');
         Route::get('/update', 'HomeController@showUpdateProfilePage')->name('profile.update');
     });
-    Route::get('/buy', 'HomeController@showBuyPacketPage')->name('packet.buy');
+    Route::get('/buy/private/{id}', 'TransactionController@showBuyPacketPrivatePage')->name('packet.buy.private');
+    Route::post('/buy/private/{id}', 'TransactionController@buyBelajarPrivate')->name('packet.buy.private');
+    Route::get('/buy/belajar_mandiri', 'TransactionController@showBuyPacketPage')->name('packet.buy');
+    Route::post('/buy/belajar_mandiri', 'TransactionController@buyBelajarMandiri')->name('packet.buy');    
+    Route::get('/buy/completed', 'TransactionController@completed')->name('packet.completed');
+    Route::get('/buy/failed', 'TransactionController@failed')->name('packet.failed');
+    Route::get('/buy/unfinished', 'TransactionController@unfinished')->name('packet.unfinished');
+    
     Route::get('/payment', 'HomeController@showPaymentPage')->name('packet.payment');
 });
 
+Route::post('/buy/notification', 'TransactionController@notification')->name('packet.notification');
 Route::get('/teacher/register', 'TeacherController@register')->name('teacher.register');
 Route::group(['prefix' => 'teacher', 'middleware' => ['teacher', 'auth']], function () {
     Route::get('/dashboard', 'TeacherController@showDashboard')->name('teacher.dashboard');
     
     Route::group(['prefix' => 'class'], function () {
         Route::get('/', 'Teacher\ClassController@showClass')->name('teacher.class.index');
+        Route::post('/{id}zoom', 'Teacher\ClassController@addZoom')->name('teacher.class.zoom');
         Route::get('/insert', 'Teacher\ClassController@showClassInsertPage')->name('teacher.class.insert');
         Route::get('/{id}', 'Teacher\ClassController@showDetailClass')->name('teacher.class.show');
         Route::post('/insert', 'Teacher\ClassController@addClass')->name('teacher.class.insert');
@@ -78,11 +105,11 @@ Route::group(['prefix' => 'teacher', 'middleware' => ['teacher', 'auth']], funct
         Route::delete('/delete', 'Teacher\ClassController@deleteClass')->name('teacher.class.delete');
     });
 
-    Route::group(['prefix' => 'private'], function () {
-        Route::get('/detail', 'TeacherController@showDetailPrivateInfo')->name('teacher.private.detail');
-        Route::get('/insert', 'TeacherController@showPrivateInfoInsertPage')->name('teacher.private.insert');
-        Route::get('/update', 'TeacherController@showPrivateInfoUpdatePage')->name('teacher.private.update');        
-    });
+    // Route::group(['prefix' => 'private'], function () {
+    //     Route::get('/detail', 'TeacherController@showDetailPrivateInfo')->name('teacher.private.detail');
+    //     Route::get('/insert', 'TeacherController@showPrivateInfoInsertPage')->name('teacher.private.insert');
+    //     Route::get('/update', 'TeacherController@showPrivateInfoUpdatePage')->name('teacher.private.update');        
+    // });
 
     Route::group(['prefix' => 'video_materi'], function () {
         Route::get('/insert', 'Teacher\VideoMateriController@displayVideoMateriInsertPage')->name('teacher.video_materi.insert');

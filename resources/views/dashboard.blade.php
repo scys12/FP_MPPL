@@ -102,23 +102,30 @@
           <h5 class="font-weight-bold text-danger">Kelas Private Saya</h5>
         </div>
         <div class="row">
-          @foreach ($privateClass as $class)
-            <div class="col-md-4 mt-3">
-              <div class="card shadow">
-                <div class="d-flex justify-content-center p-3">
-                  <img src="{{asset('img/read.png')}}" style="width:100px;height:100px" class="card-img-top" alt="...">
-                </div>
-                <div class="card-body">
-                  <h5 class="card-title">{{$class->private_class->user->name}}</h5>
-                  <p class="card-text font-weight-bold">{{$class->private_class->name}}</p>
-                  <hr>
-                  <a href="{{route('private.show', ['id' => $class->private_class->id ])}}" class="btn btn-primary">Lihat Detail</a>
+          @if (count($privateClass) > 0)
+            @foreach ($privateClass as $class)
+              <div class="col-md-4 mt-3">
+                <div class="card shadow">
+                  <div class="d-flex justify-content-center p-3">
+                    <img src="{{asset('img/read.png')}}" style="width:100px;height:100px" class="card-img-top" alt="...">
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">{{$class->private_class->user->name}}</h5>
+                    <p class="card-text font-weight-bold">{{$class->private_class->name}}</p>
+                    <hr>
+                    <a href="{{route('private.show', ['id' => $class->private_class->id ])}}" class="btn btn-primary">Lihat Detail</a>
+                  </div>
                 </div>
               </div>
+            @endforeach
+          @else
+            <div class="card card-body">
+              <p>Tidak ada Kelas Private</p>
             </div>
-          @endforeach
+          @endif
         </div>
     </div>
+  </div>
   </div>
 </div>
 @endsection

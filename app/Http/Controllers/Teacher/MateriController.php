@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MateriRequest;
 use App\SoalMateri;
-
+use App\Question;
 class MateriController extends Controller
 {
 
@@ -21,8 +21,12 @@ class MateriController extends Controller
   public function showMateri(Request $request, $id)
   {
     $materi = SoalMateri::findOrFail($id);
+    $questions = Question::where('type', '1')
+                        ->where('product_ids', $id)
+                        ->get();
     return view('teacher.materi.show',[
       'materi' => $materi,
+      'questions' => $questions
     ]);
   }
   

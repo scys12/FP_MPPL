@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Freemalangga;
 
 class AdminController extends Controller
 {
@@ -16,9 +17,26 @@ class AdminController extends Controller
     return view('admin.auth.register');
   }
 
+  public function insertFree(Request $request)
+  {
+    
+    Freemalangga::create([
+      'name' => $request->name,
+      'description' => $request->description
+    ]);
+    return redirect()->route('admin.freemalangga.index');
+  }
+
   public function displayAllFreemalangga()
   {
-    return view('admin.freemalangga.index');
+    $freemalanggas = Freemalangga::paginate(9);
+    return view('admin.freemalangga.index', compact('freemalanggas'));
+  }
+
+  public function displayFreemalangga(Request $request, $id)
+  {
+    $freemalangga = Freemalangga::find($id);
+    return view('detail_freemalangga', compact('freemalangga'));
   }
 
   public function displayFreemalanggaInsertPage()
@@ -26,9 +44,26 @@ class AdminController extends Controller
     return view('admin.freemalangga.insert');
   }
 
-  public function displayFreemalanggaUpdatePage()
+  public function displayFreemalanggaUpdatePage(Request $request, $id)
   {
-    return view('admin.freemalangga.update');
+    $freemalangga = Freemalangga::find($id);
+    return view('admin.freemalangga.update', compact('freemalangga'));
+  }
+
+  public function updateFreemalangga(Request $request, $id)
+  {
+    $freemalangga = Freemalangga::find($id);
+    $data['description'] = $request->description;
+    $data['name'] = $request->name;
+    $freemalangga->update($data);
+    return redirect()->route('admin.freemalangga.index');
+  }
+
+  public function deleteFreemalangga(Request $request)
+  {
+    $id = $request->id;
+    Freemalangga::findOrFail($id)->delete();
+    return redirect()->route('admin.freemalangga.index');       
   }
 
   public function displayAllStudent()

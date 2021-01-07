@@ -61,11 +61,12 @@ Route::group(['prefix' => 'products'], function () {
             Route::get('/', 'ProductController@showPrivatePage')->name('private');
             Route::get('/{id}', 'ProductController@showDetailPrivatePage')->name('private.show');
         });
-        Route::group(['prefix' => 'freemalangga'], function () {
-            Route::get('/', 'HomeController@showFreemalanggaPage')->name('freemalangga');
-            Route::get('/detail', 'HomeController@showFreemalanggaDetailPage')->name('freemalangga.show');
-        });
     });
+});
+
+Route::group(['prefix' => 'freemalangga'], function () {
+    Route::get('/', 'HomeController@showFreemalanggaPage')->name('freemalangga');
+    Route::get('/{id}', 'HomeController@showFreemalanggaDetailPage')->name('freemalangga.show');
 });
 
 Route::get('/transfer', 'HomeController@displayHowToTransferPage')->name('how_to_transfers');
@@ -118,7 +119,15 @@ Route::group(['prefix' => 'teacher', 'middleware' => ['teacher', 'auth']], funct
         Route::post('/insert', 'Teacher\VideoMateriController@insertVideoMateri')->name('teacher.video_materi.insert');
         Route::get('/update/{id}', 'Teacher\VideoMateriController@displayVideoMateriUpdatePage')->name('teacher.video_materi.update');
         Route::put('/update/{id}', 'Teacher\VideoMateriController@updateVideoMateri')->name('teacher.video_materi.update');
-        Route::delete('/delete', 'Teacher\VideoMateriController@deleteVideoMateri')->name('teacher.video_materi.delete');
+        Route::delete('/delete', 'Teacher\VideoMateriController@deleteVideoMateri')->name('teacher.video_materi.delete');        
+        Route::group(['prefix' => '{id}/question'], function () {
+            Route::post('/insert', 'TeacherController@addQuestion')->name('teacher.video_materi.question.insert');
+            Route::get('/{question_id}', 'TeacherController@showQuestion')->name('teacher.video_materi.question.show');
+
+            Route::group(['prefix' => '{question_id}/comment'], function () {
+                Route::post('/insert', 'TeacherController@addComment')->name('teacher.video_materi.comment.insert');
+            });
+        });
     });
 
     Route::group(['prefix' => 'materi'], function () {
@@ -129,6 +138,14 @@ Route::group(['prefix' => 'teacher', 'middleware' => ['teacher', 'auth']], funct
         Route::get('/update/{id}', 'Teacher\MateriController@displayMateriUpdatePage')->name('teacher.materi.update');
         Route::put('/update/{id}', 'Teacher\MateriController@updateMateri')->name('teacher.materi.update');
         Route::delete('/delete', 'Teacher\MateriController@deleteMateri')->name('teacher.materi.delete');
+        Route::group(['prefix' => '{id}/question'], function () {
+            Route::post('/insert', 'TeacherController@addQuestionSoalMateri')->name('teacher.soal_materi.question.insert');                    
+            Route::get('/{question_id}', 'TeacherController@showQuestionSoalMateri')->name('teacher.soal_materi.question.show');
+
+            Route::group(['prefix' => '{question_id}/comment'], function () {
+                Route::post('/insert', 'TeacherController@addCommentSoalMateri')->name('teacher.soal_materi.comment.insert');
+            });
+        });
     });
 
     Route::group(['prefix' => 'profile'], function () {
@@ -143,7 +160,11 @@ Route::group(['prefix' => 'admin'], function () {
     
     Route::group(['prefix' => 'freemalangga'], function () {
         Route::get('/insert', 'AdminController@displayFreemalanggaInsertPage')->name('admin.freemalangga.insert');
-        Route::get('/update', 'AdminController@displayFreemalanggaUpdatePage')->name('admin.freemalangga.put');
+        Route::post('/insert', 'AdminController@insertFree')->name('admin.freemalangga.insert');
+        Route::put('/{id}/update', 'AdminController@updateFreemalangga')->name('admin.freemalangga.put');
+        Route::delete('/delete', 'AdminController@deleteFreemalangga')->name('admin.freemalangga.delete');
+        Route::get('/{id}/update', 'AdminController@displayFreemalanggaUpdatePage')->name('admin.freemalangga.put');
+        Route::get('/{id}', 'AdminController@displayFreemalangga')->name('admin.freemalangga.show');
     });
 
     Route::group(['prefix' => 'student'], function () {

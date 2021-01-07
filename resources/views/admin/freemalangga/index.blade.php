@@ -1,4 +1,4 @@
-@extends('layouts.useradmin')
+@extends('layouts.app')
 
 @section('content')
 <div class="container mb-4 mt-4">
@@ -6,49 +6,24 @@
     <div class="d-flex col-md-12 justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Freemalangga</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="#" class="btn btn-sm btn-dark">Tambah Freemalangga</a>
+            <a href="{{route('admin.freemalangga.insert')}}" class="btn btn-sm btn-dark">Tambah Freemalangga</a>
         </div>
     </div>
-    <div class="col-md-4">
-      <div class="card mt-3">
-        <div class="card-body card-materi-admin">
-          <i data-toggle="modal" data-target="#delete-modal" data-type="kehadiran" data-id="" class="close-btn btn-del fas fa-times-circle"></i>
-          <a href="#" style="font-size:18px;" class="card-title">Cara pengklasifikasi taksonomi</a>
-          <h6 class="card-subtitle mb-2 mt-2 text-muted">Biologi SMA</h6>
-          <p class="card-text">Some description here</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card mt-3">
-        <div class="card-body card-materi-admin">
-          <i data-toggle="modal" data-target="#delete-modal" data-type="kehadiran" data-id="" class="close-btn btn-del fas fa-times-circle"></i>
-          <a href="#" style="font-size:18px;" class="card-title">Cara pengklasifikasi taksonomi</a>
-          <h6 class="card-subtitle mb-2 mt-2 text-muted">Biologi SMA</h6>
-          <p class="card-text">Some description here</p>
+    @foreach ($freemalanggas as $freemalangga)
+      <div class="col-md-4">
+        <div class="card mt-3">
+          <div class="card-body card-materi-admin">
+            <i data-toggle="modal" data-target="#delete-modal" data-type="kehadiran" data-id="{{$freemalangga->id}}" class="close-btn btn-del fas fa-times-circle"></i>
+            <a href="{{route('admin.freemalangga.show', ['id' => $freemalangga->id])}}" style="font-size:18px;" class="card-title">{{$freemalangga->name}}</a>
+            <p class="card-text">Materi Freemalangga</p>
+            <div class="btn-group mr-2">
+              <a href="{{route('admin.freemalangga.show', ['id' => $freemalangga->id])}}" class="btn btn-sm btn-outline-danger">Lihat</a>
+              <a href="{{route('admin.freemalangga.put', ['id' => $freemalangga->id])}}" class="btn btn-sm btn-outline-warning">Update</a>
+          </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card mt-3">
-        <div class="card-body card-materi-admin">
-          <i data-toggle="modal" data-target="#delete-modal" data-type="kehadiran" data-id="" class="close-btn btn-del fas fa-times-circle"></i>
-          <a href="#" style="font-size:18px;" class="card-title">Cara pengklasifikasi taksonomi</a>
-          <h6 class="card-subtitle mb-2 mt-2 text-muted">Biologi SMA</h6>
-          <p class="card-text">Some description here</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card mt-3">
-        <div class="card-body card-materi-admin">
-          <i data-toggle="modal" data-target="#delete-modal" data-type="kehadiran" data-id="" class="close-btn btn-del fas fa-times-circle"></i>
-          <a href="#" style="font-size:18px;" class="card-title">Cara pengklasifikasi taksonomi</a>
-          <h6 class="card-subtitle mb-2 mt-2 text-muted">Biologi SMA</h6>
-          <p class="card-text">Some description here</p>
-        </div>
-      </div>
-    </div>
+    @endforeach
   </div>
 </div>
 <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal-label" aria-hidden="true">
@@ -67,7 +42,7 @@
                   Apakah kamu yakin ingin menghapus ini <span class="type-data"></span> ?
               </div>
           <div class="modal-footer">
-              <form action="" method="post" id="modal-form">
+              <form action="{{route('admin.freemalangga.delete')}}" method="post" id="modal-form">
                   @csrf
                   @method('DELETE')
                   <input type="hidden" name="id" id="idDel">
@@ -78,4 +53,13 @@
       </div>
   </div>
 </div>
+<script>
+  const btnDelete  = document.querySelectorAll('.btn-del');
+  btnDelete.forEach( btn => {
+      btn.addEventListener('click', (e) =>{
+          const itemID = e.currentTarget.getAttribute('data-id');
+          document.querySelector('#idDel').value = itemID;
+      })
+  });
+</script>
 @endsection

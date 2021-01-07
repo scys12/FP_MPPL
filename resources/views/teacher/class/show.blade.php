@@ -54,6 +54,7 @@
             <a href="{{url('http://'.$class->zoom)}}">Link Zoom</a>
           </div>
         @endisset
+        <hr>
         <form action="{{route('teacher.class.zoom', ['id' => $class->id ])}}" method="post">
           @csrf
           <div class="form-group">

@@ -7,6 +7,7 @@ use App\Payment;
 use App\UserVideoMateri;
 use App\UserSoalMateri;
 use App\UserPrivate;
+use App\Freemalangga;
 
 class HomeController extends Controller
 {
@@ -108,12 +109,14 @@ class HomeController extends Controller
 
     public function showFreemalanggaPage()
     {
-        return view('freemalangga');
+        $freemalangga = Freemalangga::paginate(9);
+        return view('freemalangga', compact('freemalangga'));
     }
 
-    public function showFreemalanggaDetailPage()
+    public function showFreemalanggaDetailPage(Request $request, $id)
     {
-        return view('detail_freemalangga');
+        $freemalangga = Freemalangga::find($id);
+        return view('detail_freemalangga', compact('freemalangga'));
     }    
 
     public function showPaymentPage()

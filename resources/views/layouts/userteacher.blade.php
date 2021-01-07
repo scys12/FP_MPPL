@@ -40,7 +40,8 @@
                             <i class="far fa-user"></i>
                             {{ Auth::user()->username }}
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">                            
+                            <a class="dropdown-item" href="{{ route('teacher.dashboard') }}">{{ __('Dashboard') }}</a>
                             <a class="dropdown-item" href="{{ route('teacher.profile.show') }}">{{ __('Profile') }}</a>
                             <a class="dropdown-item" href="{{ route('teacher.class.index') }}">{{ __('Kelas Private Saya') }}</a>
                             <a class="dropdown-item" href="{{ route('teacher.video_materi.index') }}">{{ __('Video Materi Saya') }}</a>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\VideoMateriRequest;
 use App\VideoMateri;
 use Illuminate\Support\Facades\Storage;
+use App\Question;
 
 class VideoMateriController extends Controller
 {
@@ -21,8 +22,12 @@ class VideoMateriController extends Controller
   public function showVideoMateri(Request $request, $id)
   {
     $video_materi = VideoMateri::findOrFail($id);
+    $questions = Question::where('type', '1')
+                        ->where('product_ids', $id)
+                        ->get();
     return view('teacher.video_materi.show',[
       'video_materi' => $video_materi,
+      'questions' => $questions
     ]);
   }
 

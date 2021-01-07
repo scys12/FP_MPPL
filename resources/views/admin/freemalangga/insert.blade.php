@@ -1,4 +1,4 @@
-@extends('layouts.useradmin')
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -7,7 +7,7 @@
       <h1 class="h2">Tambah Freemalangga</h1>      
     </div>
     <div class="col-md-8 shadow mb-3 p-5">
-      <form method="post">
+      <form action="{{route('admin.freemalangga.insert')}}" method="post">
           @csrf
           <div class="form-group">
               <label for="name">Nama Materi</label>
@@ -18,7 +18,7 @@
           </div>
           <div class="form-group">
               <label for="deskripsi">Deskripsi Materi</label>
-              <textarea name="deskripsi" id="deskripsi" class="form-control" cols="30" rows="10"></textarea>
+              <textarea name="description" id="description" class="form-control"></textarea>
               @error('deskripsi')
                   <div class="invalid-feedback">{{ $message }}</div>
               @enderror
@@ -28,4 +28,21 @@
     </div>
   </div>
 </div>
+<script>
+  const editor = ClassicEditor
+  .create( document.querySelector( '#description' ) )
+  .then( editor => {
+      console.log( editor );
+  } )
+  .catch( error => {
+      console.error( error );
+  } );
+  const inputFile = document.getElementById('link-file');
+  inputFile.addEventListener("input", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+          document.getElementById('filename').innerHTML = file.name;
+      }
+  });
+</script>
 @endsection

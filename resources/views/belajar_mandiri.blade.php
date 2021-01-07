@@ -24,14 +24,16 @@
                   @if (!$one)
                     <a href="{{route('packet.buy')}}" class="btn btn-outline-danger btn-sm">Beli</a>                  
                   @endif
-                  @if (count(\App\UserVideoMateri::where('user_ids', Auth::user()->id)->where('video_materi_ids' , $materi->id)->get()) > 0)
-                    <a href="{{route('video_materi.show', ['id' => $materi->id])}}" class="btn btn-outline-secondary btn-sm">Detail</a>                      
-                  @else 
-                      <form action="{{route('video_materi.attend', ['id' => $materi->id])}}" method="post">
-                        @csrf
-                        <button type="submit" class="btn btn-outline-danger btn-sm">Ambil Kelas</button>
-                      </form>
-                    @endif
+                  @if ($one)
+                    @if (count(\App\UserVideoMateri::where('user_ids', Auth::user()->id)->where('video_materi_ids' , $materi->id)->get()) > 0)
+                      <a href="{{route('video_materi.show', ['id' => $materi->id])}}" class="btn btn-outline-secondary btn-sm">Detail</a>                      
+                    @else
+                        <form action="{{route('video_materi.attend', ['id' => $materi->id])}}" method="post">
+                          @csrf
+                          <button type="submit" class="btn btn-outline-danger btn-sm">Ambil Kelas</button>
+                        </form>
+                      @endif
+                  @endif
                 </div>
               </div>
             </div>
@@ -56,15 +58,16 @@
                     <div class="btn-group mr-2">
                       @if (!$one)
                         <a href="{{route('packet.buy')}}" class="btn btn-outline-danger btn-sm">Beli</a>                  
-                      @endif
-                      @if (count(\App\UserSoalMateri::where('user_ids', Auth::user()->id)->where('soal_materi_ids' , $materi->id)->get()) > 0)
-                        <a href="{{route('soal_materi.show', ['id' => $materi->id])}}" class="btn btn-outline-secondary btn-sm">Detail</a>                      
-                      @else 
+                      @else
+                        @if (count(\App\UserSoalMateri::where('user_ids', Auth::user()->id)->where('soal_materi_ids' , $materi->id)->get()) > 0)
+                          <a href="{{route('soal_materi.show', ['id' => $materi->id])}}" class="btn btn-outline-secondary btn-sm">Detail</a>                      
+                        @else 
                           <form action="{{route('soal_materi.attend', ['id' => $materi->id])}}" method="post">
                             @csrf
                             <button type="submit" class="btn btn-outline-danger btn-sm">Ambil Kelas</button>
                           </form>
                         @endif
+                      @endif                      
                     </div>
                   </div>
                 </div>

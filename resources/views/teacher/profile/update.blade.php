@@ -8,27 +8,44 @@
           <h3 class="font-weight-bold">Update Profile</h3>
           <hr>
         </div>
-        <form action="" class="p-3">
-          <label for="exampleInputEmail1">Photo</label>
-          <div class="custom-file mb-3">
-            <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-            <label class="custom-file-label" for="validatedCustomFile">Choose New Profile...</label>
+        <form method="POST" action="{{route('teacher.profile.update.put')}}" class="p-3">
+          @csrf
+          @method('PUT')
+          <div class="form-group">
+              <label for="username" class="text-md-right font-weight-bold">{{ __('Username') }}</label>
+              <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username', Auth::user()->username) }}" required autocomplete="username" autofocus>
+                  @error('username')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                  @enderror                                
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Name</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="Samuel Sinambela">
+              <label for="name" class="text-md-right font-weight-bold">{{ __('Name') }}</label>
+              <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', Auth::user()->name) }}" required autocomplete="name" autofocus>
+                  @error('name')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                  @enderror                                
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="samuel@gmail.com">
+              <label for="email" class="text-md-right font-weight-bold">{{ __('Alamat E-Mail') }}</label>
+              <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email', Auth::user()->email) }}" required autocomplete="email">
+                  @error('email')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                  @enderror                                
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Lokasi</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="Surabaya">
-          </div>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Nomor Telepon</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="+6282273710028">
+              <label for="text" class="text-md-right font-weight-bold">{{ __('Nomor Telepon') }}</label>
+              <input id="phone_number" type="text" class="form-control @error('phone_number') is-invalid @enderror" name="phone_number" value="{{ old('phone_number', Auth::user()->phone_number) }}" required autocomplete="phone_number">
+                  @error('phone_number')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                  @enderror                                
           </div>
           <div class="d-flex justify-content-center mt-3 mb-4">
             <button type="submit" class="btn btn-lg btn-secondary">Update</button>

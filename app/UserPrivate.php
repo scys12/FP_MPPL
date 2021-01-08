@@ -13,7 +13,7 @@ class UserPrivate extends Model
 
     public function user()
     {
-        return $this->hasOne('App\User');
+        return $this->belongsTo('App\User', 'user_ids');
     }
     public function private_class()
     {

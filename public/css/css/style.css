@@ -412,6 +412,22 @@ mark,
   padding-top: 6rem !important;
 }
 
+.mt-7{
+  margin-top: 7rem !important;
+}
+
+.pt-7{
+  padding-top: 7rem !important;
+}
+
+.mt-8{
+  margin-top: 8rem !important;
+}
+
+.pt-8{
+  padding-top: 8rem !important;
+}
+
 
 .figure-caption {
   font-size: 90%;

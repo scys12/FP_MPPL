@@ -7,6 +7,7 @@ use App\VideoMateri;
 use App\SoalMateri;
 use App\Payment;
 use App\PrivateClass;
+use App\UserPrivate;
 use App\Question;
 
 class ProductController extends Controller{
@@ -61,16 +62,16 @@ class ProductController extends Controller{
 
   public function showDetailPrivatePage(Request $request, $id)
   {
-      $private = PrivateClass::findOrFail($id);
+      $private = UserPrivate::where('user_ids', $request->user()->id)->where('private_class_ids', $id)->get();
       $buy = Payment::where('user_ids', '=', $request->user()->id)
                     ->where('type', "2")
                     ->where('date_started', '<=', new \DateTime())
                     ->where('date_end', '>=', new \DateTime())
-                    ->where('teacher_ids', $private->user_ids)
+                    ->where('teacher_ids', $private[0]->private_class->user_ids)
                     ->where('private_ids', $id)
                     ->get();
       return view('client.private.show', [
-        'private' => $private,
+        'private' => $private[0],
         'buy' => count($buy),
       ]);
   }

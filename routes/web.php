@@ -32,13 +32,19 @@ Route::group(['prefix' => 'products'], function () {
                 Route::get('/', 'ProductController@showAllVideoMateri')->name('video_materi.index');
                 Route::get('/{id}', 'ProductController@showVideoMateri')->name('video_materi.show');
                 Route::post('/{id}/attend', 'UserVideoMateriController@registerSoal')->name('video_materi.attend');                
-
+                
                 Route::group(['prefix' => '{id}/question'], function () {
                     Route::post('/insert', 'QuestionController@addQuestion')->name('video_materi.question.insert');                    
                     Route::get('/{question_id}', 'QuestionController@showQuestion')->name('video_materi.question.show');
+                    Route::delete('/delete', 'QuestionController@deleteQuestion')->name('video_materi.question.delete');
+                    Route::get('/update/{question_id}', 'QuestionController@updateQuestionPage')->name('video_materi.question.update');
+                    Route::put('/update/{question_id}', 'QuestionController@updateQuestion')->name('video_materi.question.update');
 
                     Route::group(['prefix' => '{question_id}/comment'], function () {
                         Route::post('/insert', 'CommentController@addComment')->name('video_materi.comment.insert');
+                        Route::delete('/delete', 'CommentController@deleteComment')->name('video_materi.comment.delete');
+                        Route::get('/update/{comment_id}', 'CommentController@updateCommentPage')->name('video_materi.comment.update');
+                        Route::put('/update/{comment_id}', 'CommentController@updateComment')->name('video_materi.comment.update');
                     });
                 });
             });
@@ -50,9 +56,15 @@ Route::group(['prefix' => 'products'], function () {
                 Route::group(['prefix' => '{id}/question'], function () {
                     Route::post('/insert', 'QuestionController@addQuestionSoalMateri')->name('soal_materi.question.insert');                    
                     Route::get('/{question_id}', 'QuestionController@showQuestionSoalMateri')->name('soal_materi.question.show');
+                    Route::delete('/delete', 'QuestionController@deleteQuestion')->name('soal_materi.question.delete');
+                    Route::get('/update/{question_id}', 'QuestionController@updateQuestionPageMateri')->name('soal_materi.question.update');
+                    Route::put('/update/{question_id}', 'QuestionController@updateQuestionMateri')->name('soal_materi.question.update.put');
 
                     Route::group(['prefix' => '{question_id}/comment'], function () {
                         Route::post('/insert', 'CommentController@addCommentSoalMateri')->name('soal_materi.comment.insert');
+                        Route::delete('/delete', 'CommentController@deleteComment')->name('soal_materi.comment.delete');
+                        Route::get('/update/{comment_id}', 'CommentController@updateCommentPageMateri')->name('soal_materi.comment.update');
+                        Route::put('/update/{comment_id}', 'CommentController@updateCommentMateri')->name('soal_materi.comment.update');
                     });
                 });
             });
@@ -78,10 +90,12 @@ Route::group(['middleware' => ['auth', 'user']], function () {
     Route::group(['prefix' => 'profile'], function () {
         Route::get('/', 'HomeController@showProfilePage')->name('profile.show');
         Route::get('/update', 'HomeController@showUpdateProfilePage')->name('profile.update');
+        Route::put('update/user', 'HomeController@updateUser')->name('profile.update');        
     });
     Route::get('/buy/private/{id}', 'TransactionController@showBuyPacketPrivatePage')->name('packet.buy.private');
     Route::post('/buy/private/{id}', 'TransactionController@buyBelajarPrivate')->name('packet.buy.private');
     Route::get('/buy/belajar_mandiri', 'TransactionController@showBuyPacketPage')->name('packet.buy');
+    Route::get('/buy/history', 'TransactionController@historyPacket')->name('packet.history');
     Route::post('/buy/belajar_mandiri', 'TransactionController@buyBelajarMandiri')->name('packet.buy');    
     Route::get('/buy/completed', 'TransactionController@completed')->name('packet.completed');
     Route::get('/buy/failed', 'TransactionController@failed')->name('packet.failed');
@@ -97,7 +111,7 @@ Route::group(['prefix' => 'teacher', 'middleware' => ['teacher', 'auth']], funct
     
     Route::group(['prefix' => 'class'], function () {
         Route::get('/', 'Teacher\ClassController@showClass')->name('teacher.class.index');
-        Route::post('/{id}zoom', 'Teacher\ClassController@addZoom')->name('teacher.class.zoom');
+        Route::post('/{id}/zoom', 'Teacher\ClassController@addZoom')->name('teacher.class.zoom');
         Route::get('/insert', 'Teacher\ClassController@showClassInsertPage')->name('teacher.class.insert');
         Route::get('/{id}', 'Teacher\ClassController@showDetailClass')->name('teacher.class.show');
         Route::post('/insert', 'Teacher\ClassController@addClass')->name('teacher.class.insert');
@@ -123,9 +137,15 @@ Route::group(['prefix' => 'teacher', 'middleware' => ['teacher', 'auth']], funct
         Route::group(['prefix' => '{id}/question'], function () {
             Route::post('/insert', 'TeacherController@addQuestion')->name('teacher.video_materi.question.insert');
             Route::get('/{question_id}', 'TeacherController@showQuestion')->name('teacher.video_materi.question.show');
+            Route::delete('/delete', 'TeacherController@deleteQuestion')->name('teacher.video_materi.question.delete');
+            Route::get('/update/{question_id}', 'TeacherController@updateQuestionPage')->name('teacher.video_materi.question.update');
+            Route::put('/update/{question_id}', 'TeacherController@updateQuestion')->name('teacher.video_materi.question.update');
 
             Route::group(['prefix' => '{question_id}/comment'], function () {
                 Route::post('/insert', 'TeacherController@addComment')->name('teacher.video_materi.comment.insert');
+                Route::delete('/delete', 'TeacherController@deleteComment')->name('teacher.video_materi.comment.delete');
+                Route::get('/update/{comment_id}', 'TeacherController@updateCommentPage')->name('teacher.video_materi.comment.update');
+                Route::put('/update/{comment_id}', 'TeacherController@updateComment')->name('teacher.video_materi.comment.update');
             });
         });
     });
@@ -139,11 +159,17 @@ Route::group(['prefix' => 'teacher', 'middleware' => ['teacher', 'auth']], funct
         Route::put('/update/{id}', 'Teacher\MateriController@updateMateri')->name('teacher.materi.update');
         Route::delete('/delete', 'Teacher\MateriController@deleteMateri')->name('teacher.materi.delete');
         Route::group(['prefix' => '{id}/question'], function () {
-            Route::post('/insert', 'TeacherController@addQuestionSoalMateri')->name('teacher.soal_materi.question.insert');                    
+            Route::post('/insert', 'TeacherController@addQuestionSoalMateri')->name('teacher.soal_materi.question.insert');
             Route::get('/{question_id}', 'TeacherController@showQuestionSoalMateri')->name('teacher.soal_materi.question.show');
+            Route::delete('/delete', 'TeacherController@deleteQuestion')->name('teacher.soal_materi.question.delete');
+            Route::get('/update/{question_id}', 'TeacherController@updateQuestionPageMateri')->name('teacher.soal_materi.question.update');
+            Route::put('/update/{question_id}', 'TeacherController@updateQuestionMateri')->name('teacher.soal_materi.question.update');
 
             Route::group(['prefix' => '{question_id}/comment'], function () {
                 Route::post('/insert', 'TeacherController@addCommentSoalMateri')->name('teacher.soal_materi.comment.insert');
+                Route::delete('/delete', 'TeacherController@deleteComment')->name('teacher.soal_materi.comment.delete');
+                Route::get('/update/{comment_id}', 'TeacherController@updateCommentPageMateri')->name('teacher.soal_materi.comment.update');
+                Route::put('/update/{comment_id}', 'TeacherController@updateCommentMateri')->name('teacher.soal_materi.comment.update');
             });
         });
     });
@@ -151,6 +177,7 @@ Route::group(['prefix' => 'teacher', 'middleware' => ['teacher', 'auth']], funct
     Route::group(['prefix' => 'profile'], function () {
         Route::get('/', 'TeacherController@showProfile')->name('teacher.profile.show');
         Route::get('/update', 'TeacherController@updateProfile')->name('teacher.profile.update');
+        Route::put('/update/user', 'HomeController@updateUser')->name('teacher.profile.update.put');
     });
 });
 

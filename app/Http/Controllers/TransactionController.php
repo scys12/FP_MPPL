@@ -272,4 +272,11 @@ class TransactionController extends Controller
 			return redirect()->route('packet.buy.private', ['id' => $order->private_ids])->with('status', "Sorry, we couldn't process your payment.");
 		}
 	}
+
+	public function historyPacket(Request $request)
+	{
+		$transactionsBelajar = $request->user()->transactions->where('type', 1);
+		$transactionsPrivate = $request->user()->transactions->where('type', 2);
+		return view('buy_history', compact('transactionsBelajar', 'transactionsPrivate'));	
+	}
 }

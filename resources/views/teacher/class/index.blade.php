@@ -1,33 +1,36 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-3">
-  <div class="d-flex col-md-12 justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-      <h3 class="font-weight-bold">Kelas Private Saya</h3>
-      <div class="btn-toolbar mb-2 mb-md-0">
-          <a href="{{{route('teacher.class.insert')}}}" class="btn btn-sm btn-dark">Tambah Kelas Private</a>
-      </div>
-  </div>
-  <div class="row">
-    @foreach ($classes as $class)
-      <div class="col-md-4 mt-3">
-        <div class="card shadow-sm">
-          <div class="d-flex justify-content-center p-3">
-            <img src="{{asset('img/read.png')}}" style="width:100px;height:100px" class="card-img-top" alt="...">
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">{{$class->name}} </h5>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <div class="btn-group mr-2">
-                    <a href="{{route('teacher.class.show', ['id' => $class->id])}}" class="btn btn-outline-danger btn-sm">Detail</a>
-                    <a href="{{route('teacher.class.update', ['id' => $class->id])}}" class="btn btn-outline-danger btn-sm">Update</a>
-                    <button href="#" data-toggle="modal" data-target="#delete-modal" data-id="{{$class->id}}" class=" btn-del btn btn-outline-danger btn-sm">Hapus</button>
-                </div>
+<div class="bg-light pt-6 pb-3">
+  <div class="container mt-3">
+    <div class="d-flex col-md-12 justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h3 class="font-weight-bold">Kelas Private Saya</h3>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="{{{route('teacher.class.insert')}}}" class="btn btn-sm btn-dark">Tambah Kelas Private</a>
+        </div>
+    </div>
+    <div class="row">
+      @foreach ($classes as $class)
+        <div class="col-md-4 mt-3">
+          <div class="card shadow-sm">
+            <div class="d-flex justify-content-center p-3">
+              <img src="{{asset('img/read.png')}}" style="width:100px;height:100px" class="card-img-top" alt="...">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{$class->name}} </h5>
+              <div class="btn-toolbar mb-2 mb-md-0">
+                  <div class="btn-group mr-2">
+                      <a href="{{route('teacher.class.show', ['id' => $class->id])}}" class="btn btn-outline-danger btn-sm">Detail</a>
+                      <a href="{{route('teacher.class.update', ['id' => $class->id])}}" class="btn btn-outline-danger btn-sm">Update</a>
+                      <button href="#" data-toggle="modal" data-target="#delete-modal" data-id="{{$class->id}}" class=" btn-del btn btn-outline-danger btn-sm">Hapus</button>
+                  </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    @endforeach
+      @endforeach
+    </div>
+    {{ $classes->links() }}
   </div>
 </div>
 <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal-label" aria-hidden="true">

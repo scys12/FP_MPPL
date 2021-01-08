@@ -14,7 +14,11 @@
         </div>
         <div class="col-md-6 ml-auto mr-auto mt-5">
           @if ($one)
-              <p>Kamu sudah membeli paket Belajar Mandiri</p>
+          <div class="card shadow-sm" style="margin:150px 0">
+            <div class="card-body">
+              Kamu sudah membeli paket Belajar Mandiri
+            </div>
+          </div>
           @else
             <form action="{{route('packet.buy')}}" method="POST">
               @csrf

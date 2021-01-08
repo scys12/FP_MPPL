@@ -1,33 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-  <div class="row">
-    <div class="d-flex col-md-12 justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Video Materi</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="{{route('teacher.video_materi.insert')}}" class="btn btn-sm btn-dark">Tambah Video Materi</a>
-        </div>
-    </div>
-    @foreach ($video_materis as $video)
-      <div class="col-md-4">
-        <div class="card mt-3 shadow">
-          <div class="d-flex justify-content-center">
-            <img src="{{ asset('img/presentation.png')}}" class="card-img-top" style="width: 300px; object-fit: contain; height:300px;" alt="...">
-          </div>
-          <div class="card-body">
-            <h5 class="card-title font-weight-bold">{{$video->name}}</h5>
+<div class="bg-light pt-6 pb-3">
+  <div class="container">
+    <div class="row">
+        <div class="d-flex col-md-12 justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Video Materi</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
-                <div class="btn-group mr-2">
-                    <a href="{{route('teacher.video_materi.show', ['id' => $video->id])}}" class="btn btn-sm btn-outline-danger">Lihat</a>
-                    <a href="{{route('teacher.video_materi.update', ['id' => $video->id])}}" class="btn btn-sm btn-outline-warning">Update</a>
-                    <button href="#" data-toggle="modal" data-target="#delete-modal" class=" btn-del btn btn-outline-danger btn-sm" data-id="{{$video->id}}">Hapus</button>
+                <a href="{{route('teacher.video_materi.insert')}}" class="btn btn-sm btn-dark">Tambah Video Materi</a>
+            </div>
+        </div>
+        @foreach ($video_materis as $video)
+          <div class="col-md-4">
+            <div class="card mt-3 shadow">
+              <div class="d-flex justify-content-center">
+                <img src="{{ asset('img/presentation.png')}}" class="card-img-top" style="width: 300px; object-fit: contain; height:300px;" alt="...">
+              </div>
+              <div class="card-body">
+                <h5 class="card-title font-weight-bold">{{$video->name}}</h5>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <a href="{{route('teacher.video_materi.show', ['id' => $video->id])}}" class="btn btn-sm btn-outline-danger">Lihat</a>
+                        <a href="{{route('teacher.video_materi.update', ['id' => $video->id])}}" class="btn btn-sm btn-outline-warning">Update</a>
+                        <button href="#" data-toggle="modal" data-target="#delete-modal" class=" btn-del btn btn-outline-danger btn-sm" data-id="{{$video->id}}">Hapus</button>
+                    </div>
                 </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    @endforeach
+        @endforeach
+    </div>
+    {{$video_materis->links()}}
+  </div>
 </div>
 <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal-label" aria-hidden="true">
   <div class="modal-dialog">

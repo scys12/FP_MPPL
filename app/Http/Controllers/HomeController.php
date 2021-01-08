@@ -9,6 +9,8 @@ use App\UserSoalMateri;
 use App\UserPrivate;
 use App\Freemalangga;
 
+use Illuminate\Validation\Rule;
+
 class HomeController extends Controller
 {
     /**
@@ -122,5 +124,22 @@ class HomeController extends Controller
     public function showPaymentPage()
     {
         return view('payment');
+    }
+
+    public function updateUser(Request $request)
+    {
+        $userData = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($request->user())],
+            'username' => ['required', 'string', 'max:20', Rule::unique('users')->ignore($request->user())],
+            'phone_number' => ['required', 'numeric', 'min:12'],
+        ]);
+        $data = $request->all();
+        $request->user()->update($data);
+        if ($request->user()->role == 'teacher') {
+            return redirect()->route('teacher.profile.show');
+        }else if ($request->user()->role == 'user') {
+            return redirect()->route('profile.show');
+        }
     }
 }

@@ -1,33 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-  <div class="row">
-    <div class="d-flex col-md-12 justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Soal Materi</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <a href="{{route('teacher.materi.insert')}}" class="btn btn-sm btn-dark">Tambah Soal Materi</a>
-        </div>
-    </div>
-    @foreach ($soal_materis as $materi)
-      <div class="col-md-4">
-        <div class="card mt-3 shadow">
-          <div class="d-flex justify-content-center">
-            <img src="{{ asset('img/presentation.png')}}" class="card-img-top" style="width: 300px; object-fit: contain; height:300px;" alt="...">
-          </div>
-          <div class="card-body">
-            <h5 class="card-title font-weight-bold">{{$materi->name}}</h5>
+<div class="bg-light pt-6 pb-3">
+  <div class="container">
+    <div class="row">
+        <div class="d-flex col-md-12 justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Soal Materi</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
-                <div class="btn-group mr-2">
-                    <a href="{{route('teacher.materi.show', ['id' => $materi->id])}}" class="btn btn-sm btn-outline-danger">Lihat</a>
-                    <a href="{{route('teacher.materi.update', ['id' => $materi->id])}}" class="btn btn-sm btn-outline-warning">Update</a>
-                    <button href="#" data-toggle="modal" data-target="#delete-modal" class=" btn-del btn btn-outline-danger btn-sm" data-id="{{$materi->id}}">Hapus</button>
+                <a href="{{route('teacher.materi.insert')}}" class="btn btn-sm btn-dark">Tambah Soal Materi</a>
+            </div>
+        </div>
+        @foreach ($soal_materis as $materi)
+          <div class="col-md-4">
+            <div class="card mt-3 shadow">
+              <div class="d-flex justify-content-center">
+                <img src="{{ asset('img/presentation.png')}}" class="card-img-top" style="width: 300px; object-fit: contain; height:300px;" alt="...">
+              </div>
+              <div class="card-body">
+                <h5 class="card-title font-weight-bold">{{$materi->name}}</h5>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <a href="{{route('teacher.materi.show', ['id' => $materi->id])}}" class="btn btn-sm btn-outline-danger">Lihat</a>
+                        <a href="{{route('teacher.materi.update', ['id' => $materi->id])}}" class="btn btn-sm btn-outline-warning">Update</a>
+                        <button href="#" data-toggle="modal" data-target="#delete-modal" class=" btn-del btn btn-outline-danger btn-sm" data-id="{{$materi->id}}">Hapus</button>
+                    </div>
                 </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    @endforeach
+        @endforeach
+    </div>
+  </div>
+  {{$soal_materis->links()}}
 </div>
 <div class="modal fade" id="delete-modal" tabindex="-1" aria-labelledby="delete-modal-label" aria-hidden="true">
   <div class="modal-dialog">

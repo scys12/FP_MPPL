@@ -12,7 +12,7 @@ class MateriController extends Controller
 
   public function displayAllMateri(Request $request)
   {
-    $soal_materis = $request->user()->soal_materis;
+    $soal_materis = SoalMateri::where('user_ids', $request->user()->id)->paginate();
     return view('teacher.materi.index',[
       'soal_materis' => $soal_materis,
     ]);

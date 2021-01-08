@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{asset('css/aos.css')}}">
 
     <link rel="stylesheet" href="{{asset('css/ionicons.min.css')}}">
-    
+    <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>    
     <link rel="stylesheet" href="{{asset('css/flaticon.css')}}">
     <link rel="stylesheet" href="{{asset('css/icomoon.css')}}">
     <link rel="stylesheet" href="{{asset('css/css/style.css')}}">

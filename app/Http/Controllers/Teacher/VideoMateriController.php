@@ -13,7 +13,7 @@ class VideoMateriController extends Controller
 {
   public function displayAllVideoMateri(Request $request)
   {
-    $video_materis = $request->user()->video_materis;
+    $video_materis = VideoMateri::where('user_ids', $request->user()->id)->paginate(9);
     return view('teacher.video_materi.index',[
       'video_materis' => $video_materis,
     ]);
@@ -80,6 +80,6 @@ class VideoMateriController extends Controller
       $link = VideoMateri::findOrFail($id)->link;
       $deletedFile = Storage::delete('/public/'.$link);
       VideoMateri::findOrFail($id)->delete();
-      return redirect()->route('teacher.video_materi.index');       
+      return redirect()->route('teacher.video_materi.index');
   }
 }
